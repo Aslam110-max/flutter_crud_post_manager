@@ -112,13 +112,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       ? () {
                           if (_formKey.currentState!.validate()) {
                             showCurpertinoDialog(context, "Are you sure?",
-                                "Do you want to update current post", () {
+                                "Do you want to update current post", () async {
                               PostModel updatedPostModel = PostModel(
                                   userId: int.parse(userIdController.text),
                                   id: widget.post!.id,
                                   title: titleController.text,
                                   body: bodyController.text);
-                              detailsController.updatePost(
+                             await detailsController.updatePost(
                                   widget.post!.id, updatedPostModel);
                             });
                           }
@@ -126,13 +126,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       : () {
                          if (_formKey.currentState!.validate()) {
                             showCurpertinoDialog(context, "Are you sure?",
-                                "Do you want to add current post", () {
+                                "Do you want to add current post", () async {
                               PostModel newPostModel = PostModel(
                                   userId: int.parse(userIdController.text),
                                   id: 0,
                                   title: titleController.text,
                                   body: bodyController.text);
-                              detailsController.addPost(newPostModel);
+                             await detailsController.addPost(newPostModel);
+                              Navigator.pop(context);
                             });
                           }
                       },

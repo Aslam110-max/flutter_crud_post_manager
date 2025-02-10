@@ -49,8 +49,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ? IconButton(
                 onPressed: () {
                   showCurpertinoDialog(context, "Are you sure?",
-                      "Do you want to delete current post", () {
-                    Get.find<DetailsController>().deletePost(id!);
+                      "Do you want to delete current post", () async {
+                    await Get.find<DetailsController>().deletePost(id!);
                     Navigator.pop(context);
                   });
                 },
