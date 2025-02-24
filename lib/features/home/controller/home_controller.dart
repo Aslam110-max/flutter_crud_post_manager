@@ -5,12 +5,28 @@ import 'package:get/get.dart';
 class HomeController extends GetxController implements GetxService {
   final HomeRepositoryInterface homeRepositoryInterface;
   HomeController({required this.homeRepositoryInterface});
+
   List<PostModel>? _posts;
   List<PostModel>? get posts => _posts;
+
+  List<PostModel>? _filteredPosts;
+  List<PostModel>? get filteredPosts => _filteredPosts;
+
+
+  String? _searchText;
+  String? get searchText => _searchText;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  void setSearchText(String text){
+    _searchText=text;
+    _filteredPosts= _posts!.where((post)=> post.title.toLowerCase().contains(text.toLowerCase())).toList();
+    update();
+    
+  }
+
+  
    void updatePosts(List<PostModel> newPosts) {
     _posts = newPosts;
     update();
@@ -41,6 +57,7 @@ class HomeController extends GetxController implements GetxService {
     update();
     _posts = null;
     _posts = await homeRepositoryInterface.getData();
+    _filteredPosts=_posts;
     _isLoading=false;
     update();
   }
